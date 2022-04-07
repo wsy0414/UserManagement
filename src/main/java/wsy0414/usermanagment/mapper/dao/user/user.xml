@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="wsy0414.usermanagment.mapper.user.UserMapper" >
+    <resultMap id="userInfo" type="wsy0414.usermanagment.entity.UserInfo" >
+        <id column="id" property="userId" jdbcType="INTEGER" />
+        <result column="username" property="userName" jdbcType="VARCHAR" />
+        <result column="pwd" property="pwd" jdbcType="VARCHAR" />
+        <result column="email" property="eMail" jdbcType="VARCHAR"/>
+        <result column="birthday" property="birthday" jdbcType="DATE" />
+    </resultMap>
+
+    <!-- <sql id="User_Column_List" >
+        id, userName, passWord, user_sex, nick_name
+    </sql> -->
+
+    <!-- <select id="getAll" resultMap="BaseResultMap"  >
+       SELECT 
+       <include refid="Base_Column_List" />
+       FROM users
+    </select> -->
+
+    <select id="getUserByName" parameterType="wsy0414.usermanagment.entity.UserInfo" resultMap="userInfo" >
+        SELECT 
+            *
+        FROM user_info
+        WHERE username = #{userName}
+    </select>
+
+    <select id="getUserById" parameterType="INTEGER" resultMap="userInfo" >
+        SELECT 
+            *
+        FROM user_info
+        WHERE id = #{userId}
+    </select>
+
+    <insert id="insert" parameterType="wsy0414.usermanagment.entity.UserInfo" >
+        INSERT INTO 
+            user_info(
+                username,
+                pwd,
+                email,
+                birthday
+            ) 
+        VALUES(
+            #{userName},
+            #{pwd},
+            #{eMail},
+            #{birthday},
+        )
+    </insert>
+<!-- 
+    
+
+    <update id="update" parameterType="com.neo.entity.UserEntity" >
+       UPDATE 
+            users 
+       SET 
+        <if test="userName != null">userName = #{userName},</if>
+        <if test="passWord != null">passWord = #{passWord},</if>
+        nick_name = #{nickName}
+       WHERE 
+            id = #{id}
+    </update>
+
+    <delete id="delete" parameterType="java.lang.Long" >
+       DELETE FROM
+             users 
+       WHERE 
+             id =#{id}
+    </delete> -->
+</mapper>
